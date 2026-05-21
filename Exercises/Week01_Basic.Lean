@@ -32,10 +32,9 @@ example (P Q : Prop) : ¬  (P ∨ Q) → ¬ P ∧ ¬ Q := by
   · intro hQ
     exact h (Or.inr hQ)
 
---中文命题：
---如果 P 且 Q 成立，那么 Q 且 P 成立。
 
---基础练习：
+--Basic Practice:
+
 example (P Q : Prop) : P ∧ Q → P := by
   intro h
   exact h.1
@@ -54,11 +53,13 @@ example (P Q : Prop) : P → P ∨ Q := by
   intro hP
   exact Or.inl hP
 
+--Or.inl is left injection into an or, if h : a, then Or.inl h : a ∨ b
+
 example (P Q : Prop) : Q → P ∨ Q := by
   intro hQ
   exact Or.inr hQ
 
---进阶练习：
+--Additional Practice:
 
 example (P Q R : Prop) : P ∧ (Q ∧ R) → (P ∧ Q) ∧ R := by
   intro h
