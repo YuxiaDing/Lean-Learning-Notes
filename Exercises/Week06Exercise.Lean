@@ -18,9 +18,20 @@ variable [MeasurableSpace α]
 example (f : Ω → ℝ) (hf : Measurable f) : Measurable f := by
   exact hf
 
+--Method 1
 example (f g : Ω → ℝ) (hf : Measurable f) (hg : Measurable g) :
     Measurable (fun x => f x + g x) := by
   exact Measurable.add hf hg
+
+--Method 2
+example (f g : Ω → ℝ) (hf : Measurable f) (hg : Measurable g) :
+    Measurable (fun x => f x + g x) := by
+  exact hf.add hg
+
+--Method 3
+example (f g : Ω → ℝ) (hf : Measurable f) (hg : Measurable g) :
+    Measurable (fun x => f x + g x) := by
+  measurability
 
 example (f : Ω → ℝ) (c : ℝ) (hf : Measurable f) :
     Measurable (fun x => c * f x) := by
