@@ -33,6 +33,18 @@ example (f g : Ω → ℝ) (hf : Measurable f) (hg : Measurable g) :
     Measurable (fun x => f x + g x) := by
   measurability
 
+--Method 1
+example (f : Ω → ℝ) (c : ℝ) (hf : Measurable f) :
+    Measurable (fun x => c * f x) := by
+  exact Measurable.const_mul hf c
+
+--Method 2
 example (f : Ω → ℝ) (c : ℝ) (hf : Measurable f) :
     Measurable (fun x => c * f x) := by
   exact hf.const_mul c
+
+--Method 3
+example (f : Ω → ℝ) (c : ℝ) (hf : Measurable f) :
+    Measurable (fun x => c * f x) := by
+  measurability
+
