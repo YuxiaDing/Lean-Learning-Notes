@@ -9,9 +9,9 @@ example (n : ℕ) : (Finset.range n).sum (fun _ => (0 : ℝ)) = 0 := by
 
 This statement says that the sum of `n` zeros is still zero.
 
-$$
+```math
 \sum_{k=0}^{n-1} 0 = 0
-$$
+```
 
 The proof uses `simp`, because Lean already knows that a finite sum of zeros is zero.
 
@@ -26,11 +26,11 @@ example (n : ℕ) : (Finset.range n).sum (fun _ => (1 : ℝ)) = (n : ℝ) := by
 
 This statement says that summing `1` over `Finset.range n` gives `n`.
 
-$$
+```math
 \sum_{k=0}^{n-1} 1 = n
-$$
+```
 
-The term `(n : ℝ)` casts the natural number `n : ℕ` into a real number, since the left-hand side has type `ℝ`.
+The term `(n : ℝ)` casts the natural number `n : ℕ` into a real number.
 
 ---
 
@@ -44,9 +44,9 @@ example (n : ℕ) (a : ℝ) :
 
 This statement says that the sum of `n` copies of a constant `a` is `n * a`.
 
-$$
+```math
 \sum_{k=0}^{n-1} a = n a
-$$
+```
 
 The notation `fun _ => a` means that the summand is always `a` and does not depend on the index.
 
@@ -64,13 +64,13 @@ example (n : ℕ) (f g : ℕ → ℝ) :
 
 This statement expresses the linearity of finite sums with respect to addition.
 
-$$
+```math
 \sum_{k=0}^{n-1} (f(k)+g(k))
 =
 \sum_{k=0}^{n-1} f(k)
 +
 \sum_{k=0}^{n-1} g(k)
-$$
+```
 
 The proof uses `rw [Finset.sum_add_distrib]`, which rewrites the sum of a pointwise addition as the addition of two sums.
 
@@ -87,12 +87,12 @@ def normalizedSum (X : ℕ → ℝ) (n : ℕ) : ℝ :=
 
 This defines the normalized finite sum of a real sequence `X`.
 
-$$
+```math
 \mathrm{normalizedSum}(X,n)
 =
 \frac{1}{\sqrt n}
 \sum_{k=0}^{n-1} X_k
-$$
+```
 
 The keyword `noncomputable` is needed because `Real.sqrt` is a mathematical function that Lean does not treat as directly computable.
 
@@ -107,9 +107,15 @@ example (X : ℕ → ℝ) : normalizedSum X 0 = 0 := by
 
 This statement says that when `n = 0`, the normalized sum is zero because the sum is taken over the empty set.
 
-$$
+```math
 \sum_{k \in \mathrm{Finset.range}\ 0} X_k = 0
-$$
+```
+
+It is also written as:
+
+```math
+\sum_{k = 0}^{-1} X_k = 0
+```
 
 The proof `simp [normalizedSum]` unfolds the definition and simplifies the empty sum.
 
@@ -118,18 +124,18 @@ The proof `simp [normalizedSum]` unfolds the definition and simplifies the empty
 ## Exercise 7: Normalized sum of the zero sequence
 
 ```lean
-example (n : ℕ) : normalizedSum (fun _ => 0) n = 0 := by
+example (n : ℕ) : normalizedSum (fun _ => 0) (n : \N) = 0 := by
   simp [normalizedSum]
 ```
 
-This statement says that if every term of the sequence is zero, then the normalized sum is zero.
+This statement says that if every term of the sequence is zero, then the normalized sum is zero. It holds true for any natural number n.
 
-$$
+```math
 \frac{1}{\sqrt n}
 \sum_{k=0}^{n-1} 0
 =
-0
-$$
+0\quad \forall n \in \mathbb{N}
+```
 
 The proof unfolds `normalizedSum` and uses the fact that a finite sum of zeros is zero.
 
