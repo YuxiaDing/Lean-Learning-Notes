@@ -97,3 +97,86 @@ as x tends to 0, x tends to 0;
 the constant function 1 tends to 1;
 therefore x + 1 tends to 1.
 ```
+## Definition and Examples: `convergesToZero`
+
+```lean
+def convergesToZero (u : ℕ → ℝ) : Prop :=
+  Tendsto u atTop (𝓝 0)
+```
+
+This defines a predicate called `convergesToZero`.
+
+The input `u : ℕ → ℝ` is a real-valued sequence.  
+The output is a proposition saying that `u` converges to `0`.
+
+In mathematical notation:
+
+```text
+u n → 0 as n → ∞
+```
+
+In Lean, this is written as:
+
+```lean
+Tendsto u atTop (𝓝 0)
+```
+
+Here:
+
+- `atTop` means `n → ∞`,
+- `𝓝 0` means the neighborhood filter of `0`.
+
+---
+
+```lean
+example : convergesToZero (fun _ : ℕ => (0 : ℝ)) := by
+  unfold convergesToZero
+  exact tendsto_const_nhds
+```
+
+This proves that the constant zero sequence converges to zero.
+
+The command
+
+```lean
+unfold convergesToZero
+```
+
+replaces `convergesToZero` with its definition, turning the goal into:
+
+```lean
+Tendsto (fun _ : ℕ => (0 : ℝ)) atTop (𝓝 0)
+```
+
+Then
+
+```lean
+exact tendsto_const_nhds
+```
+
+finishes the proof, because a constant function always tends to its constant value.
+
+---
+
+```lean
+example (u : ℕ → ℝ) (h : Tendsto u atTop (𝓝 0)) :
+    convergesToZero u := by
+  unfold convergesToZero
+  exact h
+```
+
+This example says: if we already know that `u` tends to `0`, then `u` satisfies `convergesToZero`.
+
+The assumption
+
+```lean
+h : Tendsto u atTop (𝓝 0)
+```
+
+is exactly the unfolded meaning of:
+
+```lean
+convergesToZero u
+```
+
+So after unfolding the definition, the goal becomes exactly `h`, and `exact h` completes the proof.
