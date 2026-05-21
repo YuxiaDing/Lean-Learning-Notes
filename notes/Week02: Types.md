@@ -120,9 +120,84 @@ example (A B : Set α) : A ∩ B = B ∩ A := by
     exact And.intro hx.2 hx.1
 ```
 
+Explanation:
+
+```lean
+ext x
+```
+
+turns set equality into an elementwise statement about an arbitrary element `x`.
+
+```lean
+constructor
+```
+
+splits the equivalence into two directions.
+
+In the first direction, after:
+
+```lean
+intro hx
+```
+
+we have:
+
+```lean
+hx : x ∈ A ∩ B
+```
+
+This is equivalent to having both:
+
+```lean
+hx.1 : x ∈ A
+hx.2 : x ∈ B
+```
+
+To prove:
+
+```lean
+x ∈ B ∩ A
+```
+
+we construct the pair in the opposite order:
+
+```lean
+And.intro hx.2 hx.1
+```
+
+The second direction is exactly the same argument with `A` and `B` interchanged.
+
 ```lean
 example (A B C : Set α) : A ⊆ B → B ⊆ C → A ⊆ C := by
   intro hAB hBC
   intro x hxA
   exact hBC (hAB hxA)
 ```
+
+Explanation:
+
+```lean
+hAB : A ⊆ B
+```
+
+is essentially:
+
+```lean
+∀ x, x ∈ A → x ∈ B
+```
+
+Thus:
+
+```lean
+hAB hxA
+```
+
+uses `hxA : x ∈ A` to produce a proof of `x ∈ B`.
+
+Similarly:
+
+```lean
+hBC (hAB hxA)
+```
+
+produces a proof of `x ∈ C`.
