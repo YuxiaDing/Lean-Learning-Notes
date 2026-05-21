@@ -106,3 +106,43 @@ Explanation:
 - `noncomputable section`: functions such as `Real.sqrt` are usually not computational objects in Lean, so definitions involving them often live in a noncomputable section.
 - `def normalizedSum ...`: introduces a named object for the standardized finite sum.
 - `simp [normalizedSum]`: unfolds the definition of `normalizedSum` and lets `simp` simplify the sum over `Finset.range 0`.
+
+
+What's more, the statement
+
+```lean
+normalizedSum X 0 = 0
+```
+
+does **not** mean that all values of `X` are zero. Instead, it means that when the number of terms is `0`, the normalized sum is equal to `0`.
+
+By definition,
+
+```lean
+normalizedSum X 0
+= (1 / Real.sqrt 0) * ∑ k in Finset.range 0, X k
+```
+
+But
+
+```lean
+Finset.range 0 = ∅
+```
+
+so the summation is an empty sum:
+
+```lean
+∑ k in Finset.range 0, X k = 0
+```
+
+Therefore,
+
+```lean
+normalizedSum X 0
+= (1 / Real.sqrt 0) * 0
+= 0
+```
+
+The important point is that no term of the form `X k` is actually used in the sum, because `Finset.range 0` contains no elements.
+
+So the result holds for **any** function `X : ℕ → ℝ`, regardless of the values of `X 0`, `X 1`, `X 2`, and so on.
